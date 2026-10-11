@@ -53,4 +53,6 @@ def getAvailableTools():
         getLeagueTiers,
         getLeagues,
         getLeagueSeasonDetails,
+        getLeagueTierDetails,
+        getLeagueSeasons, 
     ]

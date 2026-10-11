@@ -1,6 +1,7 @@
 from services.base_http_client import BaseHTTPClient 
 from dotenv import load_dotenv 
 import os 
+from urllib.parse import quote 
 
 load_dotenv()
 
@@ -21,14 +22,14 @@ class ClashService:
     def getLeagues(self):
         try:
             response = self.client.getCall("leagues", headers = self.headers)
-            return response 
+            return response["items"]
         except Exception as e:
             return self._handleError(e)
 
     def getLeagueSeasons(self, leagueId : str):
         try:
             response = self.client.getCall(f"leagues/{leagueId}/seasons", headers = self.headers)
-            return response
+            return response["items"]
         except Exception as e:
             return self._handleError(e)
 
@@ -36,7 +37,8 @@ class ClashService:
         try:
             response = self.client.getCall(f"leagues/{leagueId}/seasons/{seasonId}", headers = self.headers)
             results = []
-            for playerRanking in response:
+            #print("RESPONSE_ITEMS", response["items"])
+            for playerRanking in response["items"]:
                 obj = {}
                 if "name" in playerRanking and "tag" in playerRanking:
                     obj["playerName"] = playerRanking["name"]
@@ -66,7 +68,7 @@ class ClashService:
     def getLocations(self):
         try:
             response = self.client.getCall(f"locations", headers = self.headers)
-            return response 
+            return response["items"]
         except Exception as e:
             return self._handleError(e)
 
@@ -85,15 +87,18 @@ class ClashService:
             return self._handleError(e)
 
     def getPlayerDetails(self, playerTag : str):
+        print("PLAYER_TAG", playerTag)
         try:
-            response = self.client.getCall(f"players/{playerTag}")
+            print("ENCODED_DATA", quote(playerTag,safe=''))
+            response = self.client.getCall(f"players/{quote(playerTag,safe='')}", headers = self.headers)
             return response 
         except Exception as e:
             return self._handleError(e)
 
     def getClanDetails(self, clanTag : str):
         try:
-            response = self.client.getCall(f"clans/{clanTag}")
+            print("ENCODED_DATA", quote(clanTag, safe=''))
+            response = self.client.getCall(f"clans/{quote(clanTag, safe='')}", headers = self.headers)
             return response 
         except Exception as e:
             return self._handleError(e)
