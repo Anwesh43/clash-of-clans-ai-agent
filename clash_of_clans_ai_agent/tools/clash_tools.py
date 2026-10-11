@@ -43,7 +43,7 @@ def getClanDetails(clanTag : str):
     return clashService.getClanDetails(clanTag=clanTag)
 
 def getAvailableTools():
-    return [
+    return list(set([
         getClanDetails,
         getPlayerDetails,
         getLeagueTierDetails, 
@@ -55,4 +55,4 @@ def getAvailableTools():
         getLeagueSeasonDetails,
         getLeagueTierDetails,
         getLeagueSeasons, 
-    ]
+    ]))

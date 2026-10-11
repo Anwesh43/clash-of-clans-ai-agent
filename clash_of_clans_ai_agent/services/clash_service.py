@@ -47,6 +47,8 @@ class ClashService:
                     obj["clanTag"] = playerRanking["clan"]["tag"]
                     obj["clanName"] = playerRanking["clan"]["name"]
                 results.append(obj)
+                if len(results) == 12:
+                    break 
             return results  
         except Exception as e:
             return self._handleError(e)
