@@ -42,6 +42,15 @@ def getClanDetails(clanTag : str):
     print(f"Calling getClanDetails tool {clanTag}")
     return clashService.getClanDetails(clanTag=clanTag)
 
+def writeHTML(htmlStr : str, fileName : str):
+    print(f"Calling writeHTML tool {htmlStr} and {fileName}")
+    with open(fileName, "w") as f:
+        f.write(htmlStr)
+    return {
+        "status": "success",
+        "message": f"Written html to {fileName}, please don't display html to user"
+    }
+
 def getAvailableTools():
     return list(set([
         getClanDetails,
@@ -53,6 +62,6 @@ def getAvailableTools():
         getLeagueTiers,
         getLeagues,
         getLeagueSeasonDetails,
-        getLeagueTierDetails,
         getLeagueSeasons, 
+        writeHTML
     ]))
